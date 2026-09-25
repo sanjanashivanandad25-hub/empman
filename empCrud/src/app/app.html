@@ -1,0 +1,61 @@
+﻿<div class="bg-visual" aria-hidden="true">
+  <video class="motion-video" autoplay muted loop playsinline preload="auto">
+    <source src="https://cdn.pixabay.com/video/2024/03/01/202587-918431513_large.mp4" type="video/mp4" />
+  </video>
+  <span class="orb orb-one"></span>
+  <span class="orb orb-two"></span>
+  <span class="orb orb-three"></span>
+  <span class="scan-beam"></span>
+  <span class="noise-layer"></span>
+</div>
+
+<nav class="topbar" aria-label="Main navigation">
+  <div class="brand-group">
+    <div class="brand-mark">E / S</div>
+    <div class="brand-copy">
+      <span class="brand-name">EMPLOYEE / SYSTEM</span>
+      <span class="brand-subtitle">Operational intelligence</span>
+    </div>
+  </div>
+
+  <div class="nav-links" aria-label="Primary sections">
+    <a routerLink="/employees" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">DASHBOARD</a>
+    <a routerLink="/employees" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">EMPLOYEES</a>
+    <a routerLink="/employees/add" routerLinkActive="active">ADD EMPLOYEE</a>
+  </div>
+
+  <div class="nav-status" aria-label="System status">
+    <span class="status-dot"></span>
+    <span>MENU / STATUS</span>
+  </div>
+</nav>
+
+<main class="app-shell">
+  <section class="dashboard-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">PEOPLE / DATA / OPERATIONS</p>
+      <h1 class="hero-title">
+        EMPLOYEE<br />
+        MANAGEMENT
+      </h1>
+      <p class="hero-subtitle">One interface for managing your workforce with clarity and precision.</p>
+    </div>
+
+    <div class="hero-panel" aria-label="Operational status overview">
+      <div class="status-block">
+        <span class="mini-label">SYSTEM</span>
+        <strong>ONLINE</strong>
+      </div>
+      <div class="status-block">
+        <span class="mini-label">API</span>
+        <strong>CONNECTED</strong>
+      </div>
+      <div class="status-block">
+        <span class="mini-label">PORT</span>
+        <strong>9999</strong>
+      </div>
+    </div>
+  </section>
+
+  <router-outlet></router-outlet>
+</main>

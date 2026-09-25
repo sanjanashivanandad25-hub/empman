@@ -1,0 +1,99 @@
+<section class="page-section">
+  <div class="section-kicker">
+    <span>01 / OVERVIEW</span>
+    <span class="live-pill"><i></i> SYSTEM LIVE</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">DIRECTORY</p>
+      <h2>EMPLOYEE DIRECTORY</h2>
+    </div>
+    <button class="primary-btn" [routerLink]="['/employees', 'add']">ADD EMPLOYEE</button>
+  </div>
+
+  <div class="summary-grid">
+    <div *ngFor="let card of summaryCards" class="summary-card" [ngClass]="card.accent">
+      <span class="summary-label">{{ card.label }}</span>
+      <strong>{{ card.value }}</strong>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="SEARCH / start typing..."
+        aria-label="Search employees"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert error">{{ errorMessage }}</div>
+
+  <div *ngIf="loading" class="status-box" aria-live="polite">
+    <span class="scan-line"></span>
+    <strong>LOADING EMPLOYEE DATA</strong>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && filteredEmployees.length === 0" class="empty-state">
+    <h3>DIRECTORY EMPTY</h3>
+    <p>No employee records found.</p>
+    <button class="primary-btn" [routerLink]="['/employees', 'add']">ADD EMPLOYEE</button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && filteredEmployees.length > 0" class="table-wrapper">
+    <table class="employee-table">
+      <thead>
+        <tr>
+          <th>01</th>
+          <th>NAME</th>
+          <th>AGE</th>
+          <th>SALARY</th>
+          <th>DESIGNATION</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of filteredEmployees; let index = index">
+          <td class="id-cell">{{ employee.id }}</td>
+          <td>
+            <div class="employee-cell">
+              <span class="avatar">{{ employee.name.charAt(0).toUpperCase() }}</span>
+              <span>{{ employee.name }}</span>
+            </div>
+          </td>
+          <td>{{ employee.age }}</td>
+          <td>{{ employee.salary | currency: 'USD' : 'symbol' : '1.0-0' }}</td>
+          <td>{{ employee.desig }}</td>
+          <td class="action-buttons">
+            <button class="secondary-btn small-btn" [routerLink]="['/employees', 'view', employee.id]">VIEW</button>
+            <button class="secondary-btn small-btn" [routerLink]="['/employees', 'edit', employee.id]">EDIT</button>
+            <button class="danger-btn small-btn" (click)="openDeleteModal(employee)">DELETE</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="delete-modal-backdrop" *ngIf="deleteModalOpen" (click)="closeDeleteModal()">
+  <div class="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-title" (click)="$event.stopPropagation()">
+    <div class="delete-modal-header">
+      <p class="eyebrow">REMOVE EMPLOYEE?</p>
+      <h3 id="delete-title">EMPLOYEE / {{ pendingDeleteEmployee?.id }}</h3>
+    </div>
+
+    <p class="delete-message">
+      This action will permanently remove <strong>{{ pendingDeleteEmployee?.name }}</strong> from the directory.
+    </p>
+
+    <div class="delete-actions">
+      <button type="button" class="secondary-btn" (click)="closeDeleteModal()">CANCEL</button>
+      <button type="button" class="danger-btn" (click)="confirmDelete()">DELETE</button>
+    </div>
+  </div>
+</div>

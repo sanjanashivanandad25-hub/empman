@@ -1,0 +1,73 @@
+<section class="details-section">
+  <div class="details-card" *ngIf="!loading && employee">
+    <div class="topline">
+      <span>EMPLOYEE / {{ employee.id }}</span>
+      <span class="live-pill"><i></i> PROFILE ACTIVE</span>
+    </div>
+
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">CASE STUDY</p>
+        <h2>{{ employee.name }}</h2>
+      </div>
+      <div class="action-row">
+        <button class="secondary-btn" (click)="goBack()">BACK</button>
+        <button class="secondary-btn" (click)="editEmployee()">EDIT</button>
+        <button class="danger-btn" (click)="openDeleteModal()">DELETE</button>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="meta-block">
+        <span class="meta-label">NAME</span>
+        <strong>{{ employee.name }}</strong>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">ID</span>
+        <strong>#{{ employee.id }}</strong>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <span class="label">Age</span>
+        <span class="value">{{ employee.age }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Salary</span>
+        <span class="value">{{ employee.salary | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
+      </div>
+      <div class="detail-item full-width">
+        <span class="label">Designation</span>
+        <span class="value">{{ employee.desig }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="status-box">
+    <span class="scan-line"></span>
+    <strong>LOADING EMPLOYEE DATA</strong>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="alert error">
+    {{ errorMessage }}
+  </div>
+</section>
+
+<div class="delete-modal-backdrop" *ngIf="deleteModalOpen" (click)="closeDeleteModal()">
+  <div class="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-title" (click)="$event.stopPropagation()">
+    <div class="delete-modal-header">
+      <p class="eyebrow">REMOVE EMPLOYEE?</p>
+      <h3 id="delete-title">EMPLOYEE / {{ employee?.id }}</h3>
+    </div>
+
+    <p class="delete-message">
+      This action will permanently remove <strong>{{ employee?.name }}</strong> from the directory.
+    </p>
+
+    <div class="delete-actions">
+      <button type="button" class="secondary-btn" (click)="closeDeleteModal()">CANCEL</button>
+      <button type="button" class="danger-btn" (click)="deleteEmployee()">DELETE</button>
+    </div>
+  </div>
+</div>

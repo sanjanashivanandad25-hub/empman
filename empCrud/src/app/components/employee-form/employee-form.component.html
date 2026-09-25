@@ -1,0 +1,76 @@
+<section class="form-section">
+  <div class="form-card">
+    <div class="topline">
+      <span>{{ isEditMode ? 'EDIT / EMPLOYEE' : 'NEW / EMPLOYEE' }}</span>
+      <span class="live-pill"><i></i> SYSTEM READY</span>
+    </div>
+
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">{{ isEditMode ? 'UPDATE' : 'CREATE' }}</p>
+        <h2>{{ isEditMode ? 'EDIT EMPLOYEE' : 'NEW EMPLOYEE' }}</h2>
+      </div>
+      <div class="status-badge" aria-label="Status overview">
+        <span>STATUS</span>
+        <strong>{{ isEditMode ? 'UPDATE' : 'READY' }}</strong>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert error">{{ errorMessage }}</div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="field-block">
+          <span class="field-index">01 / IDENTITY</span>
+          <div class="field-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" formControlName="name" placeholder="Enter employee name" />
+            <div class="field-error" *ngIf="employeeForm.get('name')?.touched && employeeForm.get('name')?.invalid">
+              {{ getFieldError('name') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <span class="field-index">02 / INFORMATION</span>
+          <div class="field-group">
+            <label for="age">Age</label>
+            <input id="age" type="number" formControlName="age" min="1" />
+            <div class="field-error" *ngIf="employeeForm.get('age')?.touched && employeeForm.get('age')?.invalid">
+              {{ getFieldError('age') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <span class="field-index">03 / COMPENSATION</span>
+          <div class="field-group">
+            <label for="salary">Salary</label>
+            <input id="salary" type="number" formControlName="salary" min="0" />
+            <div class="field-error" *ngIf="employeeForm.get('salary')?.touched && employeeForm.get('salary')?.invalid">
+              {{ getFieldError('salary') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <span class="field-index">04 / ROLE</span>
+          <div class="field-group">
+            <label for="desig">Designation</label>
+            <input id="desig" type="text" formControlName="desig" placeholder="Enter designation" />
+            <div class="field-error" *ngIf="employeeForm.get('desig')?.touched && employeeForm.get('desig')?.invalid">
+              {{ getFieldError('desig') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" class="secondary-btn" (click)="onCancel()">CANCEL</button>
+        <button type="submit" class="primary-btn" [disabled]="employeeForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'SAVING...' : (isEditMode ? 'UPDATE EMPLOYEE' : 'SAVE EMPLOYEE') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
